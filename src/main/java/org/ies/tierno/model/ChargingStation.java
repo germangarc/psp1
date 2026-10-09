@@ -1,4 +1,4 @@
-package org.ies.tierno;
+package org.ies.tierno.model;
 
 import java.util.concurrent.Semaphore;
 
@@ -10,16 +10,18 @@ public class ChargingStation {
         this.stats = stats;
     }
 
-    public void chargeResoult(Vehicle vehicle) throws InterruptedException {
+    public ChargeResult charge(Vehicle vehicle) throws InterruptedException {
         chargers.acquire();
         try {
-            System.out.println("El vehículo está cargando.");
+            System.out.println("El vehículo " + vehicle.plate() + " está cargando.");
             Thread.sleep(vehicle.kwh() * 20L);
+            System.out.println("El vehículo " + vehicle.plate() + " ha finalizado su carga.");
             stats.register(vehicle.kwh());
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
+
         } finally {
             chargers.release();
         }
+        ChargeResult chargeResult = new ChargeResult(vehicle.plate(), vehicle.kwh(), vehicle.kwh() * 45L);
+        return chargeResult;
     }
 }

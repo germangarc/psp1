@@ -1,6 +1,4 @@
-package org.ies.tierno;
-
-import static java.lang.classfile.Attributes.record;
+package org.ies.tierno.model;
 
 public class StationStats {
     private int totalKwh = 0    ;
@@ -8,6 +6,7 @@ public class StationStats {
 
     public synchronized void register(int kwh) {
         totalKwh += kwh;
+        totalCents += kwh * 45L;
     }
 
     public synchronized StatsSnapshot snapshot(){
