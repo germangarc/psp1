@@ -15,9 +15,8 @@ public class ChargingStation {
         try {
             System.out.println("El vehículo " + vehicle.plate() + " está cargando.");
             Thread.sleep(vehicle.kwh() * 20L);
-            System.out.println("El vehículo " + vehicle.plate() + " ha finalizado su carga.");
             stats.register(vehicle.kwh());
-
+            System.out.println("El vehículo " + vehicle.plate() + " ha finalizado su carga.");
         } finally {
             chargers.release();
         }
